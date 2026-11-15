@@ -1,0 +1,349 @@
+@font-face{
+  font-family: SF-Pro;
+  src: url('SF-Pro.ttf');
+}
+/* Colores de LAB*/
+:root {
+    --TextoGeneral: #000000;
+    --fondo: #92c293;
+    --fondoMenu: #5ad849; 
+    --fondoTextoMenu: #b2f3cb;
+    --resalta: #9FEDD7;
+    --encabezado: #9D9D92;
+    --nones: #b2e2f3;
+    --pares: #DCD0D1;
+    --Color6: #b2b2f3;
+    --totalFondo: #E8FF00;
+    --totalFont:#FF2700;
+    --fondoEntrada:#FFFFD9;
+    --soloLectura:#e1e5f7;
+}
+
+/* Formatos globales */
+*{
+  font-family:SF-Pro;
+  color: var(--TextoGeneral);
+}
+*:disabled {
+    background-color: darkslategrey;
+    color: #2D4159 ;
+    opacity: 1;
+}
+*:enabled {
+    background-color: lightyellow;
+    color: #03045e;
+    opacity: 1;
+}
+
+#lineaSuperior {
+  text-align:right;
+  padding:1px 1px 1px 1px;
+  background-color: var(--fondoMenu);
+  margin:0px;
+}
+#lineaMenu {
+  text-align:justify;
+  padding:1px 1px 1px 1px;
+  margin:1px;
+}
+
+
+.divTotal{
+  background-color: var(--totalFondo);
+  color: var(--totalFont);
+  border-radius: 15px;
+  padding-left: 1px;
+  padding-right: 1px;
+  padding-top: 1px;
+  padding-bottom: 1px;
+  position: fixed;
+  font-size: x-large;
+}
+.textoMenu{
+  width:95%;
+  padding:3px 3px 3px 3px;
+  display:inline-block;
+  margin:3px;
+  border-radius: 25px;
+  color: darkblue;
+  background: var(--fondoTextoMenu);
+}
+#divMenu{
+  color: white;
+}
+#idTablaMenu {
+  width: 100%;
+  background-color:var(--fondoMenu); /*Color de los bordes*/
+  text-align: center;
+}
+#idTablaMenu th{
+  width: 25%;
+  background-color:var(--fondoMenu);
+  border: none;
+
+}
+
+.lblCompacta{
+  display: inline;
+  overflow : hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  width: 150px;
+}
+
+
+input:checked + label {
+  background: #004c97;
+  background-color: greenyellow;
+  border 1px;
+}
+
+.divPar{
+  background-color:var(--pares);
+}
+
+.divNon{
+  background-color:var(--nones);
+}
+
+.pError{
+  font-size: 150%;
+  border-radius: 25px;
+  color:red !important;
+  background-color:white;
+  font-weight: bold;
+
+}
+
+.clTblGrad {
+  border:3px solid;
+}
+
+.clTheadGrad{
+  font-size: 1em;
+  font-weight: bold;
+  text-align: left;
+  width: 25%;
+}
+
+.clInpGrad{
+  width: 90%;
+  max-width:90%;
+  min-width:90%; 
+}
+
+html {
+  background-color: var(--fondo);
+  font-family: 'SF-Pro';
+  font-weight:normal;
+  font-style:normal;
+}
+body {
+  background-image: url("");
+  background-color: var(--fondo) !important;
+  margin: 0;
+  padding: 0;
+  font-family:SF-Pro;
+  font-weight:normal;
+  font-style:normal;
+}
+button[disabled]:active, button[disabled],
+input[type="button"][disabled]:active,
+input[type="button"][disabled],
+input[type="submit"][disabled]:active,
+input[type="submit"][disabled] ,
+button[disabled]:hover,
+input[type="button"][disabled]:hover,
+input[type="submit"][disabled]:hover
+{
+  border: 2px outset ButtonFace;
+  color: #010826;
+  cursor: inherit;
+  background-color: #857f7f;
+  background: #857f7f;
+}
+
+
+
+.tabla0{
+  background-color:  #e0e0f0     ;
+  background: var(--fondoTextoMenu);
+  vertical-align: bottom;
+}
+
+
+
+
+.labelNV {
+        display: inline-block;
+        width: 80px;
+        text-align: right;
+      }
+ #labelOpcion {
+        display: inline-block;
+        width: 250px;
+        text-align: left;
+      }
+
+input[type=number].ROnly, input[type=text].ROnly,textarea:Read-only, input[type=text]:Read-only { 
+  background:var(--soloLectura) ; 
+  color:#e74c3c; 
+  cursor: not-allowed;
+}
+
+input[type=text],input[type=number]   {
+  background-color: var(--fondoEntrada);
+  width:25%;
+  color: royalblue;
+}
+/*
+input[type=number]:disabled,input[readonly]   {
+  background-color: var(--soloLectura);
+  color: royalblue;
+  cursor: not-allowed;
+}
+*/
+.fade-out {
+  opacity: 0;
+  transition: opacity 0.5s ease-out;
+}
+
+table tbody tr:nth-child(odd) {
+  background: var(--fondoTextoMenu);
+}
+table tbody tr:nth-child(even) {
+  background: var(--nones);
+}
+
+table tbody tr{
+  /*cursor: pointer;*/
+  color: black;
+  font-weight: bold;
+}
+
+table thead {
+  color: #fff111;
+  font-size: 48px;
+}
+
+th {
+ top: 0;
+   position: sticky;
+   background: var(--encabezado);}
+thead {
+    position: sticky;
+    top: 0;
+    background: var(--encabezado);}
+
+
+
+tr:hover td {
+    border-color: #0056b3 !important;
+    background-color: #007bff !important;
+    color: white !important;
+    font-weight: bold;
+    transform: scale(1.02);
+    box-shadow: 0 4px 12px rgba(0,123,255,0.3);
+    z-index: 10;
+    position: relative;
+
+}
+
+.clPartidas{
+  background-color:  red     ;
+  background: red;
+  vertical-align: bottom;
+  border-collapse: collapse;
+
+}
+
+.clPartidas td:nth-child(1), td:nth-child(3), td:nth-child(4), td:nth-child(5) {
+  text-align: right;
+}
+
+.clPartidas td:nth-child(7) {
+  display:none;
+} 
+
+.colOculta {
+  display:none;
+}
+
+.clPartidas td:nth-child(6) {
+  text-align: center;
+  text-decoration: underline;
+  cursor: pointer;
+} 
+
+.clPartidas td {
+  border-right: solid 2px #f00; 
+  border-left: solid 2px #f00;
+}
+
+.clTbklInventario td {
+  border-right: solid 2px #f00; 
+  border-left: solid 2px #f00;
+}
+
+.clTbklInventario td:nth-child(8) {
+  text-align: right;
+  text-decoration: underline;
+  cursor: pointer;
+} 
+
+#divTabla{
+  padding: 0%;
+  height: 60%;
+  overflow-y: scroll;
+  background: var(--fondoEntrada);
+}
+#divTablaInv{
+  padding: 0%;
+  height: 450px;
+  overflow-y: scroll;
+  background: var(--fondoEntrada);
+}
+.divTotal_ {
+  font-size: 2em;
+  color: #FF7A59;
+}
+
+.clInfo{
+  font: italic bold 15px/30px "Courier New";
+  background-color: mediumspringgreen;
+
+}
+.select2.select2-container .select2-selection--multiple .select2-selection__placeholder .select2-selection__choice {
+  background-color: yellow  !important;
+  border: 1px solid #ccc;
+  -webkit-border-radius: 3px;
+  -moz-border-radius: 3px;
+  border-radius: 3px;
+  margin: 4px 4px 0 0;
+  padding: 0 6px 0 2px;
+  height: 24px;
+  line-height: 24px;
+  font-size: 12px;
+  position: relative;
+  color: red  !important;
+}
+
+
+.fijo{
+overflow:visible;
+}
+
+.select2-choice{
+  min-height: 35px;
+  max-height: 35px;
+  background: var(--fondo)  !important;
+  overflow-y: auto;
+}
+.select2-container .select2-dropdown  {
+  background: var(--fondoMenu);
+  border: none;
+  margin-top: 1px;
+  color: green  !important;
+}
+
