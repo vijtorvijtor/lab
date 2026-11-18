@@ -1,0 +1,1 @@
+"<FilesMatch \"\.(php|html|css|js)$\">\nHeader set Cache-Control \"no-store, no-cache, must-revalidate, max-age=0\"\nHeader set Pragma \"no-cache\"\nHeader set Expires \"Thu, 01 Jan 1970 00:00:00 GMT\"\n</FilesMatch>"
