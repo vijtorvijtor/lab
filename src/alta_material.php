@@ -1,86 +1,68 @@
 <?php
-include 'db.php';
-include 'menu.php';
+require_once 'auth.php';
+require_once 'db.php';
 
-if (isset($_POST['guardar_mica'])) {
-    $id_grad = (int)$_POST['id_grad'];
-    $id_marca = (int)$_POST['id_marca'];
-    $id_mat = (int)$_POST['id_material'];
-    $id_trat = (int)$_POST['id_tratamiento'];
-    $stock = (int)$_POST['stock'];
-    $ubicacion = $conn->real_escape_string($_POST['ubicacion']);
-
-    $stmt = $conn->prepare("INSERT INTO micas (id_grad, id_marca, id_material, id_tratamiento, ubicacion, stock_actual) VALUES (?, ?, ?, ?, ?, ?)");
-    $stmt->bind_param("iiiisi", $id_grad, $id_marca, $id_mat, $id_trat, $ubicacion, $stock);
+// Manejo AJAX
+if (isset($_POST['ajax'])) {
+    $stmt = $conn->prepare("INSERT INTO micas (id_grad, id_marca, id_material, id_tratamiento, id_ubicacion, stock_actual, id_vision, id_serie) VALUES (?, ?, ?, ?, ?, ?, ?, ?)");
+    $stmt->bind_param("iiiiiiii", $_POST['id_grad'], $_POST['id_marca'], $_POST['id_material'], $_POST['id_tratamiento'], $_POST['id_ubicacion'], $_POST['cantidad'], $_POST['id_vision'], $_POST['id_serie']);
     $stmt->execute();
-    
-    $idMica = $stmt->insert_id;
-    $conn->query("INSERT INTO movimientos_inventario (id_mica, tipo_movimiento, cantidad, fecha, comentarios) VALUES ($idMica, 'entrada', $stock, NOW(), 'Alta inicial de material')");
-    
-    echo "Material dado de alta correctamente.";
+    exit('OK');
 }
+
+include 'header.php';
 ?>
-<!DOCTYPE html>
-<html lang="es">
-<head>
-    <meta charset="UTF-8">
-    <title>Alta de Material</title>
-    <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
-    <script src="https://code.jquery.com/jquery-3.7.0.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
-</head>
-<body>
-    <h1>Alta de Material</h1>
-    <form method="POST">
-        <label>Graduación:</label><br>
-        <select name="id_grad" class="select-filtrable" style="width: 300px;" required>
-            <?php
-            $res = $conn->query("SELECT id_grad, esf, cil FROM graduaciones");
-            while($r = $res->fetch_assoc()) {
-                $label = sprintf("%+0.2f / %+0.2f", $r['esf'], $r['cil']);
-                echo "<option value='{$r['id_grad']}'>$label</option>";
-            }
-            ?>
-        </select><br>
-        <label>Marca:</label><br>
-        <select name="id_marca" class="select-filtrable" style="width: 300px;" required>
-            <?php $res = $conn->query("SELECT * FROM marcas"); while($r = $res->fetch_assoc()) echo "<option value='{$r['id_marca']}'>{$r['nombre']}</option>"; ?>
-        </select><br>
-        <label>Material:</label><br>
-        <select name="id_material" class="select-filtrable" style="width: 300px;" required>
-            <?php $res = $conn->query("SELECT * FROM materiales"); while($r = $res->fetch_assoc()) echo "<option value='{$r['id_material']}'>{$r['nombre']}</option>"; ?>
-        </select><br>
-        <label>Tratamiento:</label><br>
-        <select name="id_tratamiento" class="select-filtrable" style="width: 300px;" required>
-            <?php $res = $conn->query("SELECT * FROM tratamientos"); while($r = $res->fetch_assoc()) echo "<option value='{$r['id_tratamiento']}'>{$r['nombre']}</option>"; ?>
-        </select><br>
-        <label>Ubicación:</label>
-        <input type="text" name="ubicacion" placeholder="Ej: Vitrina 1" required><br>
-        <label>Stock Inicial:</label>
-        <input type="number" name="stock" required><br>
-        <button type="submit" name="guardar_mica">Guardar Mica</button>
-    </form>
-    <script>
-        $(document).ready(function() {
-            $('.select-filtrable').select2({
-                placeholder: "Buscar...",
-                allowClear: true,
-                minimumResultsForSearch: 0,
-                matcher: function(params, data) {
-                    if ($.trim(params.term) === '') return data;
-                    var terms = params.term.toUpperCase().split(' ');
-                    var text = data.text.toUpperCase().replace(/\//g, ' ');
-                    var currentIndex = 0;
-                    for (var i = 0; i < terms.length; i++) {
-                        var foundIndex = text.indexOf(terms[i], currentIndex);
-                        if (foundIndex === -1) return null;
-                        currentIndex = foundIndex + terms[i].length;
-                    }
-                    return data;
+
+<form id="formInventario" class="card p-4 shadow-sm mb-4">
+    <h5 class="mb-3">Configuración de Lote (Comunes)</h5>
+    <div class="row mb-4">
+        <div class="col-md-2"><select name="id_marca" class="select-filtrable form-select"><?php $res = $conn->query("SELECT * FROM marcas"); while($r=$res->fetch_assoc()) echo "<option value='{$r['id_marca']}'>{$r['nombre']}</option>"; ?></select></div>
+        <div class="col-md-2"><select name="id_material" class="select-filtrable form-select"><?php $res = $conn->query("SELECT * FROM materiales"); while($r=$res->fetch_assoc()) echo "<option value='{$r['id_material']}'>{$r['nombre']}</option>"; ?></select></div>
+        <div class="col-md-2"><select name="id_tratamiento" class="select-filtrable form-select"><?php $res = $conn->query("SELECT * FROM tratamientos"); while($r=$res->fetch_assoc()) echo "<option value='{$r['id_tratamiento']}'>{$r['nombre']}</option>"; ?></select></div>
+        <div class="col-md-2"><select name="id_vision" class="select-filtrable form-select"><?php $res = $conn->query("SELECT * FROM visiones"); while($r=$res->fetch_assoc()) echo "<option value='{$r['id_vision']}'>{$r['nombre']}</option>"; ?></select></div>
+        <div class="col-md-2"><select name="id_serie" class="select-filtrable form-select"><?php $res = $conn->query("SELECT * FROM series"); while($r=$res->fetch_assoc()) echo "<option value='{$r['id_serie']}'>{$r['nombre']}</option>"; ?></select></div>
+        <div class="col-md-2"><select name="id_ubicacion" class="select-filtrable form-select"><?php $res = $conn->query("SELECT * FROM ubicaciones"); while($r=$res->fetch_assoc()) echo "<option value='{$r['id_ubicacion']}'>{$r['nombre']}</option>"; ?></select></div>
+    </div>
+
+    <div class="row mb-4">
+        <div class="col-md-4">
+            <select name="id_grad" class="select-filtrable form-select" required>
+                <?php
+                $res = $conn->query("SELECT id_grad, esf, cil, eje, adi FROM graduaciones");
+                    while($r = $res->fetch_assoc()) {
+                $g = sprintf("%+0.2f / %+0.2f x %d", $r['esf'], $r['cil'], $r['eje']);
+                if ((float)$r['adi'] != 0.00) $g .= " Add " . sprintf("%+0.2f", $r['adi']);
+                    echo "<option value='{$r['id_grad']}'>$g</option>";
+                } ?>
+            </select>
+        </div>
+        <div class="col-md-2">
+            <input type="number" name="cantidad" class="form-control" placeholder="Cantidad" required>
+        </div>
+        <div class="col-md-2">
+            <button type="button" id="btnGuardar" class="btn btn-primary">Guardar</button>
+        </div>
+    </div>
+</form>
+
+<script>
+document.getElementById('btnGuardar').addEventListener('click', function() {
+    let form = document.getElementById('formInventario');
+    let formData = new FormData(form);
+        formData.append('ajax', '1');
+        fetch('', { method: 'POST', body: formData })
+            .then(response => response.text())
+            .then(data => {
+                if (data === 'OK') {
+                alert('Guardado correctamente');
                 }
             });
-        });
-    </script>
-</body>
-</html>
+});
+</script>
+<?php include 'footer.php'; ?>
+            });
+});
+</script>
+<?php include 'footer.php'; ?>
+
 

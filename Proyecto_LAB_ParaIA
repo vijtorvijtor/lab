@@ -1,0 +1,22 @@
+Directrices del sistema.
+
+Sistema de gestion de taller optico e inentario
+Seleccion de opcions usando Select2 incluyendo filtro dinamico por partes de palabras respetando orden y cumpliendo union logica && 
+Las tablas deben tener ordenmamiento con click en titulo de la columna ascendiente y descendiente, y filtro por renglones mediante partes de palabras (no importa orden de palabras) cumpliendo union logico && 
+El sistema se puede ejecutar en celular, tableta o PC 
+Sistema en PHP con MySql
+Menu de hambueguesa
+Aspecto ligero y colores divertidos 
+Acceso a usuarios con niveles de jerarquia Adminstrador y operador
+Modulos de Ventas, Inventario, Conteo, Catalogos, Reportes
+Una nota de venta incluye Cliente, Partidas (con fecha automatica y modificable), Abonos, Total y estado, solo un administrador puede eliminar partidas.
+Dentro de los items de venta son Micas, Biseles, Reparaciones, Taladros, Facetado, Ranurado.
+Los estados de las notas es Abierta, Cerradoa, cancelada.
+Las micas tienen estas caracteristicas: Fabricante, Graduacion, Tratamiento, Vision, Serie.
+Graduacion se compone de 4 valores Esfera, Cilindro, Eje y Adicion.  Siempre se respoeta un formato de Signo y dos decimales en cada termino por ejemplo +1.25 / -2.75 x  30  Add +1.00 . 
+Solo la adicion se omite sin presentar valor si es 0.00 . El cero es positivo +0.00 en Esfera y negativo -0.00 en Cilindro
+La administracion de los catalogos se puede hacer al momento cuando un dato no este presente con un boton [+] validando y presentando su formato. 
+Los catalogos se administran para eliminar o editar verificando que no se queden huerfanos algunos datos.
+Los reportes se pueden descargar como CSV 
+En el inventario alertar en existencias <=1 
+El Conteo puede servir para localizar productos, contabilizar e ingresar nuevo material. Se prioriza la facilidad para localizar y para ingresar productos. Analiza y dime si es mejor matener conteo e ingreso en la misma pantalla o es mejor dividirla para mejorar la eficiencia, rapidez del trabajo.

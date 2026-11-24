@@ -1,0 +1,1 @@
+<?php include "db.php"; $pass = password_hash("1", PASSWORD_DEFAULT); $conn->query("UPDATE usuarios SET username = "a", password = "$pass" WHERE id_usuario = 1"); echo "Usuario a / 1 creado/actualizado"; ?>
